@@ -1,7 +1,7 @@
-package cz.microshop.orders.controller;
+package cz.microshop.cart.controller;
 
-import cz.microshop.orders.model.Order;
-import cz.microshop.orders.service.OrderService;
+import cz.microshop.cart.model.Cart;
+import cz.microshop.cart.service.CartService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,16 +16,16 @@ import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/order")
-public class OrderController {
+public class CartController {
 
     private final Logger LOG = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    OrderService orderService;
+    CartService cartService;
 
     @RequestMapping(value = "/create", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
-    public ResponseEntity<ArrayList<Order>> createOrder(@RequestBody ArrayList<Order> orderList)   {
-        return new ResponseEntity<ArrayList<Order>>((ArrayList<Order>) orderService.create(orderList), HttpStatus.OK);
+    public ResponseEntity<ArrayList<Cart>> createOrder(@RequestBody ArrayList<Cart> cartList)   {
+        return new ResponseEntity<ArrayList<Cart>>((ArrayList<Cart>) cartService.create(cartList), HttpStatus.OK);
 
     }
 

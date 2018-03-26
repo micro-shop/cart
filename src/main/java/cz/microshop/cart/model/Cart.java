@@ -1,4 +1,4 @@
-package cz.microshop.orders.model;
+package cz.microshop.cart.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -6,8 +6,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.UUID;
 
 //@JsonIgnoreProperties(ignoreUnknown = true)
-@Document(collection="order")
-public class Order {
+@Document(collection="cart")
+public class Cart {
     @Id
     private UUID id;
     private Integer customerId;

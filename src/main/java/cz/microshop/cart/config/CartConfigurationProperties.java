@@ -1,11 +1,11 @@
-package cz.microshop.orders.config;
+package cz.microshop.cart.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.net.URI;
 
 @ConfigurationProperties
-public class OrdersConfigurationProperties {
+public class CartConfigurationProperties {
     private String domain = "";
 
     public URI getPaymentUri() {
