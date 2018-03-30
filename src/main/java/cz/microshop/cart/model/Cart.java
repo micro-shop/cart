@@ -3,15 +3,17 @@ package cz.microshop.cart.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.UUID;
+import java.util.ArrayList;
+import java.util.List;
 
 //@JsonIgnoreProperties(ignoreUnknown = true)
 @Document(collection="cart")
 public class Cart {
     @Id
-    private UUID id;
+    private Long id;
     private Integer customerId;
     private Integer productId;
+    private List<Item> items = new ArrayList<>();
 
     public Integer getCustomerId() {
         return customerId;
@@ -21,11 +23,11 @@ public class Cart {
         this.customerId = customerId;
     }
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -35,5 +37,13 @@ public class Cart {
 
     public void setProductId(Integer productId) {
         this.productId = productId;
+    }
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
     }
 }

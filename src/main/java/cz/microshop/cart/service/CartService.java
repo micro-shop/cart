@@ -11,13 +11,25 @@ import java.util.List;
 public class CartService {
 
     @Autowired
-    private ICartRepository orderRepository;
+    private ICartRepository cartRepository;
 
     public List<Cart> findAll() {
-        return orderRepository.findAll();
+        return cartRepository.findAll();
     }
 
-    public List<Cart> create(List<Cart> cartList) {
-        return orderRepository.saveAll(cartList);
+    public Cart find(Long id) {
+        return cartRepository.findById(id).orElse(null);
+    }
+
+    public List<Cart> save(List<Cart> cartList) {
+        return cartRepository.saveAll(cartList);
+    }
+
+    public Cart save(Cart cart) {
+        return cartRepository.save(cart);
+    }
+
+    public void delete(Long id) {
+        cartRepository.deleteById(id);
     }
 }

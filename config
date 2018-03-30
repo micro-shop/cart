@@ -7,13 +7,13 @@ clusters:
 contexts:
 - context:
     cluster: KUBE_CLUSTER_NAME
-    user: KUBE_USERNAME
+    user2: KUBE_USERNAME
   name: KUBE_CONTEXT_NAME
 current-context: KUBE_CONTEXT_NAME
 kind: Config
 users:
 - name: KUBE_USERNAME
-  user:
+  user2:
     client-certificate-data: KUBE_TRAVIS_CERT
     client-key-data: KUBE_TRAVIS_KEY
     username: KUBE_USERNAME
