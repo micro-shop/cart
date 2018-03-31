@@ -1,42 +1,43 @@
 package cz.microshop.cart.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 //@JsonIgnoreProperties(ignoreUnknown = true)
 @Document(collection="cart")
 public class Cart {
     @Id
-    private Long id;
-    private Integer customerId;
-    private Integer productId;
-    private List<Item> items = new ArrayList<>();
+    @JsonSerialize(using = ToStringSerializer.class)
+    //private Long id;
+    private String id;
+    private Long cartId;
+    private Long userId;
+    //@DBRef
+    private List<Item> items;
 
-    public Integer getCustomerId() {
-        return customerId;
+    public Cart() {
+        cartId = UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE;
     }
 
-    public void setCustomerId(Integer customerId) {
-        this.customerId = customerId;
+    public Long getCartId() {
+        return cartId;
     }
 
-    public Long getId() {
-        return id;
+    public void setCartId(Long cartId) {
+        this.cartId = cartId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Long getUserId() {
+        return userId;
     }
 
-    public Integer getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Integer productId) {
-        this.productId = productId;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public List<Item> getItems() {
@@ -45,5 +46,13 @@ public class Cart {
 
     public void setItems(List<Item> items) {
         this.items = items;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

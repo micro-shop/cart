@@ -5,5 +5,8 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public interface IItemRepository extends MongoRepository<Item, Long> {
+public interface IItemRepository extends MongoRepository<Item, String> {
+
+    Item findByItemId(Long itemId);
+    //Item deleteItem(Long itemId);
 }

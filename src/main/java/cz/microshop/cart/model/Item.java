@@ -1,27 +1,29 @@
 package cz.microshop.cart.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 //@JsonIgnoreProperties(ignoreUnknown = true)
 @Document(collection="item")
 public class Item {
     @Id
-    private Long id;
+    @JsonSerialize(using = ToStringSerializer.class)
+    //private Long id;
+    private String id;
+    private Long itemId = UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE;
     private Long productId;
+    private String productName;
     private BigDecimal unitPrice;
     private Long quantity;
 
-    public Long getId() {
-        return id;
+    public Item() {
+        //itemId = UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE;
     }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
 
     public BigDecimal getUnitPrice() {
         return unitPrice;
@@ -45,5 +47,29 @@ public class Item {
 
     public void setProductId(Long productId) {
         this.productId = productId;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public Long getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(Long itemId) {
+        this.itemId = itemId;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 }

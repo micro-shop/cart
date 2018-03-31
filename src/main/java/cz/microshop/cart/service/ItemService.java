@@ -5,10 +5,10 @@ import cz.microshop.cart.model.Item;
 import cz.microshop.cart.repository.IItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class ItemService {
@@ -24,7 +24,7 @@ public class ItemService {
     }
 
     public Item find(Long id) {
-        return itemRepository.findById(id).orElse(null);
+        return itemRepository.findByItemId(id);
     }
 
     public List<Item> create(List<Item> cartList) {
@@ -32,22 +32,45 @@ public class ItemService {
     }
 
     public void delete(Long id) {
-        itemRepository.deleteById(id);
+        Item byItemId = itemRepository.findByItemId(id);
+        itemRepository.delete(byItemId);
     }
 
+    @Transactional
     public Cart addItem(Long cartId, Item item) {
         Cart cart = cartService.find(cartId);
-        Optional<Item> lineItemOptional = cart.getItems().stream().filter(cartItem -> item.getProductId().equals(cartItem.getProductId())).findFirst();
         Item lineItem = null;
+        for (Item item1 : cart.getItems()) {
+            if (item1.getProductId().equals(item.getProductId())) {
+                lineItem = item1;
+            }
+        }
+        if (lineItem != null) {
+            lineItem.setQuantity(lineItem.getQuantity() + 1L);
+            save(lineItem);
+        } else {
+            cart.getItems().add(item);
+            cart = cartService.save(cart);
+            save(item);
+        }
+        return cart;
+        /*
+        //Optional<Item> lineItemOptional = cart.getItems().stream().filter(cartItem -> item.getProductId().equals(cartItem.getProductId())).findFirst();
+        //Item lineItem = null;
         try {
-            lineItem = lineItemOptional.get();
+            //lineItem = lineItemOptional.get();
             lineItem.setQuantity(lineItem.getQuantity() + 1L);
             itemRepository.save(lineItem);
         } catch (NoSuchElementException e) {
             itemRepository.save(item);
-        }
-
+        }*/
+/*
         cart.getItems().add(lineItem);
-        return cartService.save(cart);
+        return cartService.saveart);(c*/
+    }
+
+    public Item save(Item item) {
+        if (item.getItemId() == null) item.setItemId(UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE);
+        return itemRepository.save(item);
     }
 }
