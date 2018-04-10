@@ -5,7 +5,7 @@ metadata:
   name: cart
   labels:
     name: cart
-  namespace: default
+  namespace: microshop
 spec:
   replicas: 1
   template:
